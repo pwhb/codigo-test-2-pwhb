@@ -1,4 +1,4 @@
-import { JoinTeamModal } from "./Modal";
+import { JoinTeamModal, LeaveTeamModal } from "./Modal";
 import PlayerCard from "./PlayerCard";
 import { useStore } from "./StoreContext";
 
@@ -8,6 +8,7 @@ export default function PlayerTab()
     return <>
 
         <JoinTeamModal />
+        <LeaveTeamModal />
         <ul className='grid grid-cols-1 gap-4 md:grid-cols-2'>
             {players.map((player: any, idx: number) => (
                 <PlayerCard player={player} key={player.id} isLast={idx === players.length - 1} />

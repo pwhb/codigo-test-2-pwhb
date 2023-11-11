@@ -24,6 +24,7 @@ interface StoreContextType
     updateTeam: () => boolean;
     removeTeam: () => void;
     joinTeam: (teamId: number) => void;
+    leaveTeam: () => void;
     errorMessage: ErrorMessageType;
     setErrorMessage: (message: ErrorMessageType) => void;
     selectedPlayer?: number;
@@ -185,14 +186,24 @@ const StoreProvider = ({ children }: { children: React.ReactNode; }) =>
         if (oldTeamIdx !== -1)
         {
             update[oldTeamIdx]["players"] = update[oldTeamIdx]["players"].filter((p) => p !== selectedPlayer);
-            console.log(update[oldTeamIdx]);
-            ;
+            // console.log(update[oldTeamIdx]);
         }
         const newTeamIdx = update.findIndex((t) => t.id === teamId);
         if (!update[newTeamIdx]["players"].includes(selectedPlayer!))
         {
             update[newTeamIdx]["players"].push(selectedPlayer!);
         }
+
+        setLocalStorage(update);
+        setTeamForm(initialTeamForm);
+    }
+
+    function leaveTeam()
+    {
+        const update = [...teams];
+        const teamIdx = update.findIndex((t) => t.players.includes(selectedPlayer!));
+        update[teamIdx]["players"] = update[teamIdx]["players"].filter((p) => p !== selectedPlayer);
+        // console.log(update[teamIdx]);
 
         setLocalStorage(update);
         setTeamForm(initialTeamForm);
@@ -208,7 +219,7 @@ const StoreProvider = ({ children }: { children: React.ReactNode; }) =>
 
     return (
         <StoreContext.Provider value={{
-            players, teams, load, loading, playerCount: players.length, teamCount: teams.length, setTeamForm, teamForm, addTeam, updateTeam, removeTeam, errorMessage, setErrorMessage, setSelectedPlayer, joinTeam
+            players, teams, load, loading, playerCount: players.length, teamCount: teams.length, setTeamForm, teamForm, addTeam, updateTeam, removeTeam, errorMessage, setErrorMessage, setSelectedPlayer, joinTeam, leaveTeam
         }}>
             {children}
         </StoreContext.Provider>

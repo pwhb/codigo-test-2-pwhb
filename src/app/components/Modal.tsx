@@ -8,7 +8,8 @@ export enum ModalType
     create = "create-team-modal",
     remove = "remove-team-modal",
     update = "update-team-modal",
-    join = "join-team-modal"
+    join = "join-team-modal",
+    leave = "leave-team-modal"
 }
 
 export function JoinButton({ player, }: { player: Player; })
@@ -24,6 +25,20 @@ export function JoinButton({ player, }: { player: Player; })
     }
     return <button className="btn btn-sm btn-primary" onClick={onClick}>{teams.findIndex((v: any) => v.players.includes(player.id)) === -1 ? "Join A Team" : "Move Team"}</button>;
 }
+
+export function LeaveButton({ player, }: { player: Player; })
+{
+    const { setSelectedPlayer, teams } = useStore();
+    function onClick()
+    {
+        setSelectedPlayer(player.id);
+
+        // @ts-ignore
+        document.getElementById(ModalType.leave).showModal();
+    }
+    return <button className="btn btn-sm btn-error" onClick={onClick}>Leave Team</button>;
+}
+
 
 export function CreateButton()
 {
@@ -234,6 +249,32 @@ export function JoinTeamModal()
             <div className="modal-action">
                 {selectedTeam && <button className="btn" onClick={onSubmit}>Join</button>}
 
+                <form method="dialog">
+                    <button className="btn">Close</button>
+                </form>
+            </div></> : <>
+            <p>Create a team first</p>
+        </>
+        }
+    </ModalWrapper >;
+}
+
+export function LeaveTeamModal()
+{
+    const { teams, leaveTeam } = useStore();
+
+    function onSubmit()
+    {
+        leaveTeam();
+        // @ts-ignore
+        document.getElementById(ModalType.leave).close();
+
+    }
+    return <ModalWrapper modalName={ModalType.leave}>
+        {teams.length > 0 ? <>
+            <h3 className="font-bold text-lg text-error">Leave team?</h3>
+            <div className="modal-action">
+                <button className="btn btn-error" onClick={onSubmit}>Leave</button>
                 <form method="dialog">
                     <button className="btn">Close</button>
                 </form>
