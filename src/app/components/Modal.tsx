@@ -230,6 +230,7 @@ export function JoinTeamModal()
     function onSubmit()
     {
         joinTeam(selectedTeam!);
+        setSelectedTeam(undefined);
         // @ts-ignore
         document.getElementById(ModalType.join).close();
 

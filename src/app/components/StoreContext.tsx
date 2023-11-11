@@ -181,7 +181,7 @@ const StoreProvider = ({ children }: { children: React.ReactNode; }) =>
 
         const oldTeamIdx = update.findIndex((t) => t.players.includes(selectedPlayer!));
 
-        console.log("oldTeamIdx", oldTeamIdx);
+        // console.log("oldTeamIdx", oldTeamIdx);
 
         if (oldTeamIdx !== -1)
         {
@@ -189,6 +189,9 @@ const StoreProvider = ({ children }: { children: React.ReactNode; }) =>
             // console.log(update[oldTeamIdx]);
         }
         const newTeamIdx = update.findIndex((t) => t.id === teamId);
+
+        // console.log("newTeamIdx", newTeamIdx, update);
+
         if (!update[newTeamIdx]["players"].includes(selectedPlayer!))
         {
             update[newTeamIdx]["players"].push(selectedPlayer!);
@@ -204,6 +207,8 @@ const StoreProvider = ({ children }: { children: React.ReactNode; }) =>
         const teamIdx = update.findIndex((t) => t.players.includes(selectedPlayer!));
         update[teamIdx]["players"] = update[teamIdx]["players"].filter((p) => p !== selectedPlayer);
         // console.log(update[teamIdx]);
+
+        setSelectedPlayer(undefined);
 
         setLocalStorage(update);
         setTeamForm(initialTeamForm);

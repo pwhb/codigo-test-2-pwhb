@@ -22,9 +22,11 @@ export default function PlayerCard({ player, isLast }: { player: Player; key: st
         <div className="card-body">
             <p>{player.first_name} {player.last_name}</p>
             <p>Team: {teams && teams[teams.findIndex((v: any) => v.players.includes(player.id))]?.name}</p>
-            <JoinButton player={player} />
+            <div className="flex flex-row gap-2">
+                <JoinButton player={player} />
 
-            {teams.findIndex((v: any) => v.players.includes(player.id)) !== -1 && <LeaveButton player={player} />}
+                {teams.findIndex((v: any) => v.players.includes(player.id)) !== -1 && <LeaveButton player={player} />}
+            </div>
         </div>
     </div>;
 }
