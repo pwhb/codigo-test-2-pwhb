@@ -7,17 +7,18 @@ import { useStore } from "./StoreContext";
 export default function PlayerCard({ player, isLast }: { player: Player; key: string; isLast?: boolean; })
 {
     const ref = useRef<HTMLDivElement>(null);
-    const { teams, leaveTeam } = useStore();
+    const { teams } = useStore();
 
-    useEffect(() =>
-    {
+    // turn off auto scroll
+    // useEffect(() =>
+    // {
 
 
-        if (isLast)
-        {
-            ref.current?.scrollIntoView({ behavior: 'smooth' });
-        }
-    }, []);
+    //     if (isLast)
+    //     {
+    //         ref.current?.scrollIntoView({ behavior: 'smooth' });
+    //     }
+    // }, []);
     return <div className="card w-72 bg-base-100 shadow-xl" key={player.id} ref={ref}>
         <div className="card-body">
             <p>{player.first_name} {player.last_name}</p>

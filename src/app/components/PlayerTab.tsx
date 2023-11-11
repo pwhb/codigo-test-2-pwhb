@@ -11,7 +11,9 @@ export default function PlayerTab()
         <LeaveTeamModal />
         <ul className='grid grid-cols-1 gap-4 md:grid-cols-2'>
             {players.map((player: any, idx: number) => (
-                <PlayerCard player={player} key={player.id} isLast={idx === players.length - 1} />
+                <PlayerCard player={player} key={player.id}
+                //  isLast={idx === players.length - 1}
+                />
             ))}
         </ul>
 
