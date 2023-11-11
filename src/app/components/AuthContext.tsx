@@ -42,6 +42,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode; }) =>
     {
         setUser({});
         setAuthenticated(true);
+        localStorage.removeItem("user");
     };
 
     useEffect(() =>
