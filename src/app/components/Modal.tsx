@@ -11,9 +11,9 @@ export enum ModalType
     join = "join-team-modal"
 }
 
-export function JoinButton({ player }: { player: Player; })
+export function JoinButton({ player, }: { player: Player; })
 {
-    const { setSelectedPlayer } = useStore();
+    const { setSelectedPlayer, teams } = useStore();
     function onClick()
     {
         setSelectedPlayer(player.id);
@@ -22,7 +22,7 @@ export function JoinButton({ player }: { player: Player; })
         document.getElementById(ModalType.join).showModal();
 
     }
-    return <button className="btn btn-sm btn-primary" onClick={onClick}>Join A Team</button>;
+    return <button className="btn btn-sm btn-primary" onClick={onClick}>{teams.findIndex((v: any) => v.players.includes(player.id)) === -1 ? "Join A Team" : "Move Team"}</button>;
 }
 
 export function CreateButton()

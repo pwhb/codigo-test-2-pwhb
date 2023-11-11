@@ -177,8 +177,22 @@ const StoreProvider = ({ children }: { children: React.ReactNode; }) =>
     function joinTeam(teamId: number)
     {
         const update = [...teams];
-        const index = update.findIndex((t) => t.id === teamId);
-        update[index]["players"].push(selectedPlayer!);
+
+        const oldTeamIdx = update.findIndex((t) => t.players.includes(selectedPlayer!));
+
+        console.log("oldTeamIdx", oldTeamIdx);
+
+        if (oldTeamIdx !== -1)
+        {
+            update[oldTeamIdx]["players"] = update[oldTeamIdx]["players"].filter((p) => p !== selectedPlayer);
+            console.log(update[oldTeamIdx]);
+            ;
+        }
+        const newTeamIdx = update.findIndex((t) => t.id === teamId);
+        if (!update[newTeamIdx]["players"].includes(selectedPlayer!))
+        {
+            update[newTeamIdx]["players"].push(selectedPlayer!);
+        }
 
         setLocalStorage(update);
         setTeamForm(initialTeamForm);
